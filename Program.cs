@@ -3,8 +3,17 @@ using Microsoft.Extensions.DependencyInjection;
 using MvcFirst.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<MvcFirstContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("MvcFirstContext") ?? throw new InvalidOperationException("Connection string 'MvcFirstContext' not found.")));
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<MvcFirstContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("MvcFirstContext")));
+}
+else
+{
+    builder.Services.AddDbContext<MvcFirstContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionMvcFirstContext")));
+}
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

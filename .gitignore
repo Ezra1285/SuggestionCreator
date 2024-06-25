@@ -12,6 +12,9 @@
 
 **/wwwroot/lib
 
+# Remove database files
+*Db.*
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
